@@ -36,7 +36,25 @@
                         <option value="light">Light Mode</option>
                         <option value="colorful">Colorful</option>
                         <option value="minimal">Minimal</option>
+                        <option value="high-contrast">High Contrast (A11y)</option>
+                        <option value="sepia">Sepia</option>
+                        <option value="night">Night Mode</option>
+                        <option value="custom">Custom</option>
                     </select>
+                    <div id="customColorPicker" class="custom-color-picker" style="display: none;">
+                        <div class="color-picker-row">
+                            <label for="bgColor">Background:</label>
+                            <input type="color" id="bgColor" value="#ffffff">
+                        </div>
+                        <div class="color-picker-row">
+                            <label for="textColor">Text:</label>
+                            <input type="color" id="textColor" value="#000000">
+                        </div>
+                        <div class="color-picker-row">
+                            <label for="accentColor">Accent:</label>
+                            <input type="color" id="accentColor" value="#007bff">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="control-group">
@@ -47,19 +65,53 @@
                         <option value="sans-serif">Sans-serif</option>
                         <option value="monospace">Monospace</option>
                         <option value="playful">Playful</option>
+                        <option value="dyslexia-friendly">Dyslexia Friendly</option>
+                        <option value="readable">High Readability</option>
                     </select>
                 </div>
 
                 <div class="control-group">
                     <h3>📏 Font Size</h3>
-                    <input type="range" id="fontSize" min="80" max="150" value="100" class="control-range">
+                    <input type="range" id="fontSize" min="75" max="200" value="100" class="control-range">
                     <span id="fontSizeValue">100%</span>
                 </div>
 
+                <div class="control-group">
+                    <h3>⚡ Settings</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="livePreview" checked>
+                            <span class="checkmark"></span>
+                            Live Preview
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="highContrast">
+                            <span class="checkmark"></span>
+                            Extra High Contrast
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="reducedMotion">
+                            <span class="checkmark"></span>
+                            Reduce Motion
+                        </label>
+                    </div>
+                </div>
+
                 <div class="control-actions">
-                    <button id="applyOverlay" class="btn btn-primary">Apply Overlay</button>
-                    <button id="resetOverlay" class="btn btn-secondary">Reset</button>
-                    <button id="saveConfig" class="btn btn-success">Save Config</button>
+                    <button id="applyOverlay" class="btn btn-primary" title="Apply changes (Alt+A)">Apply Overlay</button>
+                    <button id="resetOverlay" class="btn btn-secondary" title="Reset to defaults (Alt+R)">Reset</button>
+                    <button id="saveConfig" class="btn btn-success" title="Save configuration (Alt+S)">Save Config</button>
+                    <button id="undoAction" class="btn btn-warning" title="Undo last change (Ctrl+Z)" disabled>Undo</button>
+                </div>
+
+                <div class="keyboard-shortcuts">
+                    <h4>⌨️ Keyboard Shortcuts</h4>
+                    <div class="shortcuts-list">
+                        <span><kbd>Alt</kbd> + <kbd>A</kbd> Apply</span>
+                        <span><kbd>Alt</kbd> + <kbd>R</kbd> Reset</span>
+                        <span><kbd>Alt</kbd> + <kbd>S</kbd> Save</span>
+                        <span><kbd>Ctrl</kbd> + <kbd>Z</kbd> Undo</span>
+                    </div>
                 </div>
             </section>
 
@@ -80,6 +132,9 @@
         <footer class="overlay-footer">
             <p>&copy; 2025 OverlayWebsite - Transform your web experience</p>
         </footer>
+
+        <!-- Notification System -->
+        <div id="notificationContainer" class="notification-container"></div>
     </div>
 
     <script src="src/overlay.js"></script>

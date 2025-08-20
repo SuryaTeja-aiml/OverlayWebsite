@@ -266,3 +266,213 @@ body {
 .font-playful {
     font-family: 'Comic Sans MS', cursive !important;
 }
+
+.font-dyslexia-friendly {
+    font-family: 'OpenDyslexic', 'Arial', sans-serif !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+    line-height: 1.5 !important;
+}
+
+.font-readable {
+    font-family: 'Verdana', 'Tahoma', sans-serif !important;
+    letter-spacing: 0.05em !important;
+    word-spacing: 0.1em !important;
+    line-height: 1.6 !important;
+}
+
+/* New Theme Classes */
+.theme-high-contrast {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+}
+
+.theme-sepia {
+    background-color: #f4f3e7 !important;
+    color: #5c4b37 !important;
+    border: 1px solid #d4c5a9 !important;
+}
+
+.theme-night {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #404040 !important;
+}
+
+.theme-custom {
+    /* Custom theme will be applied via JavaScript */
+}
+
+/* Custom Color Picker Styles */
+.custom-color-picker {
+    margin-top: 10px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    border: 1px solid #dee2e6;
+}
+
+.color-picker-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.color-picker-row label {
+    min-width: 80px;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.color-picker-row input[type="color"] {
+    width: 50px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Checkbox Styles */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--dark-color);
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Keyboard Shortcuts Display */
+.keyboard-shortcuts {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: var(--border-radius);
+    border: 1px solid #dee2e6;
+}
+
+.keyboard-shortcuts h4 {
+    margin: 0 0 10px 0;
+    color: var(--dark-color);
+    font-size: 0.9rem;
+}
+
+.shortcuts-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.shortcuts-list span {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}
+
+.shortcuts-list kbd {
+    background: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* Notification System */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    padding: 12px 16px;
+    border-radius: var(--border-radius);
+    color: white;
+    font-weight: 500;
+    box-shadow: var(--box-shadow);
+    transform: translateX(400px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification.success {
+    background-color: var(--success-color);
+}
+
+.notification.error {
+    background-color: var(--danger-color);
+}
+
+.notification.warning {
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+}
+
+.notification.info {
+    background-color: var(--primary-color);
+}
+
+/* High Contrast Enhancement */
+.high-contrast-mode {
+    filter: contrast(150%) !important;
+}
+
+.high-contrast-mode * {
+    text-shadow: 0 0 2px rgba(0,0,0,0.8) !important;
+}
+
+/* Reduced Motion */
+.reduced-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}

@@ -11,14 +11,20 @@ class OverlayWebsite {
                 serif: 'Georgia, "Times New Roman", serif',
                 'sans-serif': '"Helvetica Neue", Arial, sans-serif',
                 monospace: '"Courier New", Consolas, monospace',
-                playful: '"Comic Sans MS", cursive'
+                playful: '"Comic Sans MS", cursive',
+                'dyslexia-friendly': '"OpenDyslexic", Arial, sans-serif',
+                readable: 'Verdana, Tahoma, sans-serif'
             },
             themes: {
                 default: '',
                 dark: 'theme-dark',
                 light: 'theme-light',
                 colorful: 'theme-colorful',
-                minimal: 'theme-minimal'
+                minimal: 'theme-minimal',
+                'high-contrast': 'theme-high-contrast',
+                sepia: 'theme-sepia',
+                night: 'theme-night',
+                custom: 'theme-custom'
             },
             writingStyles: {
                 default: 'Keep the original text style',
@@ -33,16 +39,29 @@ class OverlayWebsite {
             writingStyle: 'default',
             theme: 'default',
             fontStyle: 'default',
-            fontSize: 100
+            fontSize: 100,
+            livePreview: true,
+            highContrast: false,
+            reducedMotion: false,
+            customColors: {
+                background: '#ffffff',
+                text: '#000000',
+                accent: '#007bff'
+            }
         };
+
+        this.history = [];
+        this.maxHistorySize = 10;
 
         this.init();
     }
 
     init() {
         this.bindEvents();
+        this.bindKeyboardShortcuts();
         this.loadSavedConfig();
         this.updatePreview();
+        this.saveToHistory();
     }
 
     bindEvents() {
@@ -50,8 +69,11 @@ class OverlayWebsite {
         const writingStyleSelect = document.getElementById('writingStyle');
         if (writingStyleSelect) {
             writingStyleSelect.addEventListener('change', (e) => {
+                this.saveToHistory();
                 this.currentSettings.writingStyle = e.target.value;
-                this.updatePreview();
+                if (this.currentSettings.livePreview) {
+                    this.updatePreview();
+                }
             });
         }
 
@@ -59,9 +81,13 @@ class OverlayWebsite {
         const themeSelect = document.getElementById('theme');
         if (themeSelect) {
             themeSelect.addEventListener('change', (e) => {
+                this.saveToHistory();
                 this.currentSettings.theme = e.target.value;
-                this.applyTheme(e.target.value);
-                this.updatePreview();
+                this.toggleCustomColorPicker(e.target.value === 'custom');
+                if (this.currentSettings.livePreview) {
+                    this.applyTheme(e.target.value);
+                    this.updatePreview();
+                }
             });
         }
 
@@ -69,9 +95,12 @@ class OverlayWebsite {
         const fontStyleSelect = document.getElementById('fontStyle');
         if (fontStyleSelect) {
             fontStyleSelect.addEventListener('change', (e) => {
+                this.saveToHistory();
                 this.currentSettings.fontStyle = e.target.value;
-                this.applyFontStyle(e.target.value);
-                this.updatePreview();
+                if (this.currentSettings.livePreview) {
+                    this.applyFontStyle(e.target.value);
+                    this.updatePreview();
+                }
             });
         }
 
@@ -82,10 +111,61 @@ class OverlayWebsite {
             fontSizeRange.addEventListener('input', (e) => {
                 this.currentSettings.fontSize = e.target.value;
                 fontSizeValue.textContent = e.target.value + '%';
-                this.applyFontSize(e.target.value);
-                this.updatePreview();
+                if (this.currentSettings.livePreview) {
+                    this.applyFontSize(e.target.value);
+                    this.updatePreview();
+                }
             });
         }
+
+        // Settings checkboxes
+        const livePreviewCheckbox = document.getElementById('livePreview');
+        if (livePreviewCheckbox) {
+            livePreviewCheckbox.addEventListener('change', (e) => {
+                this.currentSettings.livePreview = e.target.checked;
+                if (e.target.checked) {
+                    this.applyAllOverlays();
+                    this.showNotification('Live preview enabled', 'success');
+                } else {
+                    this.showNotification('Live preview disabled. Use Apply button to see changes.', 'info');
+                }
+            });
+        }
+
+        const highContrastCheckbox = document.getElementById('highContrast');
+        if (highContrastCheckbox) {
+            highContrastCheckbox.addEventListener('change', (e) => {
+                this.saveToHistory();
+                this.currentSettings.highContrast = e.target.checked;
+                this.applyHighContrast(e.target.checked);
+                this.showNotification(`High contrast ${e.target.checked ? 'enabled' : 'disabled'}`, 'success');
+            });
+        }
+
+        const reducedMotionCheckbox = document.getElementById('reducedMotion');
+        if (reducedMotionCheckbox) {
+            reducedMotionCheckbox.addEventListener('change', (e) => {
+                this.saveToHistory();
+                this.currentSettings.reducedMotion = e.target.checked;
+                this.applyReducedMotion(e.target.checked);
+                this.showNotification(`Reduced motion ${e.target.checked ? 'enabled' : 'disabled'}`, 'success');
+            });
+        }
+
+        // Custom color pickers
+        ['bgColor', 'textColor', 'accentColor'].forEach(colorId => {
+            const colorInput = document.getElementById(colorId);
+            if (colorInput) {
+                colorInput.addEventListener('change', (e) => {
+                    this.saveToHistory();
+                    const colorType = colorId.replace('Color', '');
+                    this.currentSettings.customColors[colorType === 'bg' ? 'background' : colorType === 'text' ? 'text' : 'accent'] = e.target.value;
+                    if (this.currentSettings.livePreview && this.currentSettings.theme === 'custom') {
+                        this.applyCustomTheme();
+                    }
+                });
+            }
+        });
 
         // Apply overlay button
         const applyBtn = document.getElementById('applyOverlay');
@@ -100,6 +180,7 @@ class OverlayWebsite {
         const resetBtn = document.getElementById('resetOverlay');
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
+                this.saveToHistory();
                 this.resetOverlays();
                 this.showNotification('Overlay reset to defaults', 'info');
             });
@@ -111,6 +192,14 @@ class OverlayWebsite {
             saveBtn.addEventListener('click', () => {
                 this.saveConfig();
                 this.showNotification('Configuration saved!', 'success');
+            });
+        }
+
+        // Undo button
+        const undoBtn = document.getElementById('undoAction');
+        if (undoBtn) {
+            undoBtn.addEventListener('click', () => {
+                this.undoLastAction();
             });
         }
     }
@@ -128,6 +217,11 @@ class OverlayWebsite {
         if (theme !== 'default' && this.config.themes[theme]) {
             previewArea.classList.add(this.config.themes[theme]);
         }
+
+        // Handle custom theme
+        if (theme === 'custom') {
+            this.applyCustomTheme();
+        }
     }
 
     applyFontStyle(fontStyle) {
@@ -135,7 +229,7 @@ class OverlayWebsite {
         if (!previewArea) return;
 
         // Remove existing font classes
-        previewArea.classList.remove('font-serif', 'font-sans-serif', 'font-monospace', 'font-playful');
+        previewArea.classList.remove('font-serif', 'font-sans-serif', 'font-monospace', 'font-playful', 'font-dyslexia-friendly', 'font-readable');
 
         // Apply new font style
         if (fontStyle !== 'default') {
@@ -298,59 +392,152 @@ class OverlayWebsite {
         const fontStyleSelect = document.getElementById('fontStyle');
         const fontSizeRange = document.getElementById('fontSize');
         const fontSizeValue = document.getElementById('fontSizeValue');
+        const livePreviewCheckbox = document.getElementById('livePreview');
+        const highContrastCheckbox = document.getElementById('highContrast');
+        const reducedMotionCheckbox = document.getElementById('reducedMotion');
 
         if (writingStyleSelect) writingStyleSelect.value = this.currentSettings.writingStyle;
         if (themeSelect) themeSelect.value = this.currentSettings.theme;
         if (fontStyleSelect) fontStyleSelect.value = this.currentSettings.fontStyle;
         if (fontSizeRange) fontSizeRange.value = this.currentSettings.fontSize;
         if (fontSizeValue) fontSizeValue.textContent = this.currentSettings.fontSize + '%';
+        if (livePreviewCheckbox) livePreviewCheckbox.checked = this.currentSettings.livePreview;
+        if (highContrastCheckbox) highContrastCheckbox.checked = this.currentSettings.highContrast;
+        if (reducedMotionCheckbox) reducedMotionCheckbox.checked = this.currentSettings.reducedMotion;
+
+        // Update custom color picker visibility
+        this.toggleCustomColorPicker(this.currentSettings.theme === 'custom');
+
+        // Update custom color values
+        const bgColorInput = document.getElementById('bgColor');
+        const textColorInput = document.getElementById('textColor');
+        const accentColorInput = document.getElementById('accentColor');
+        if (bgColorInput) bgColorInput.value = this.currentSettings.customColors.background;
+        if (textColorInput) textColorInput.value = this.currentSettings.customColors.text;
+        if (accentColorInput) accentColorInput.value = this.currentSettings.customColors.accent;
 
         this.applyAllOverlays();
     }
 
     showNotification(message, type = 'info') {
-        // Create notification element
+        const container = document.getElementById('notificationContainer');
+        if (!container) return;
+
         const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1000;
-            animation: slideInRight 0.3s ease;
-        `;
+        notification.className = `notification ${type}`;
         notification.textContent = message;
 
-        // Add animation styles
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        container.appendChild(notification);
 
-        document.body.appendChild(notification);
-
-        // Auto remove after 3 seconds
+        // Trigger animation
         setTimeout(() => {
-            notification.style.animation = 'slideOutRight 0.3s ease';
+            notification.classList.add('show');
+        }, 100);
+
+        // Auto remove after 4 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.parentNode.removeChild(notification);
                 }
             }, 300);
-        }, 3000);
+        }, 4000);
+    }
+
+    // New methods for enhanced functionality
+    saveToHistory() {
+        const currentState = JSON.parse(JSON.stringify(this.currentSettings));
+        this.history.push(currentState);
+        
+        if (this.history.length > this.maxHistorySize) {
+            this.history.shift();
+        }
+
+        // Update undo button state
+        const undoBtn = document.getElementById('undoAction');
+        if (undoBtn) {
+            undoBtn.disabled = this.history.length <= 1;
+        }
+    }
+
+    undoLastAction() {
+        if (this.history.length > 1) {
+            this.history.pop(); // Remove current state
+            const previousState = this.history[this.history.length - 1];
+            this.currentSettings = JSON.parse(JSON.stringify(previousState));
+            this.updateUIFromSettings();
+            this.showNotification('Changes undone', 'info');
+        }
+    }
+
+    toggleCustomColorPicker(show) {
+        const colorPicker = document.getElementById('customColorPicker');
+        if (colorPicker) {
+            colorPicker.style.display = show ? 'block' : 'none';
+        }
+    }
+
+    applyCustomTheme() {
+        const previewArea = document.getElementById('previewArea');
+        if (!previewArea) return;
+
+        const { background, text, accent } = this.currentSettings.customColors;
+        previewArea.style.setProperty('background-color', background, 'important');
+        previewArea.style.setProperty('color', text, 'important');
+        previewArea.style.setProperty('border-color', accent, 'important');
+    }
+
+    applyHighContrast(enabled) {
+        const previewArea = document.getElementById('previewArea');
+        if (!previewArea) return;
+
+        if (enabled) {
+            previewArea.classList.add('high-contrast-mode');
+        } else {
+            previewArea.classList.remove('high-contrast-mode');
+        }
+    }
+
+    applyReducedMotion(enabled) {
+        const previewArea = document.getElementById('previewArea');
+        if (!previewArea) return;
+
+        if (enabled) {
+            previewArea.classList.add('reduced-motion');
+        } else {
+            previewArea.classList.remove('reduced-motion');
+        }
+    }
+
+    bindKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Alt + A: Apply overlay
+            if (e.altKey && e.key === 'a') {
+                e.preventDefault();
+                this.applyAllOverlays();
+                this.showNotification('Overlay applied via keyboard shortcut', 'success');
+            }
+            
+            // Alt + R: Reset overlay
+            if (e.altKey && e.key === 'r') {
+                e.preventDefault();
+                this.resetOverlays();
+                this.showNotification('Overlay reset via keyboard shortcut', 'info');
+            }
+            
+            // Alt + S: Save config
+            if (e.altKey && e.key === 's') {
+                e.preventDefault();
+                this.saveConfig();
+            }
+            
+            // Ctrl + Z: Undo
+            if (e.ctrlKey && e.key === 'z' && !e.shiftKey) {
+                e.preventDefault();
+                this.undoLastAction();
+            }
+        });
     }
 }
 
