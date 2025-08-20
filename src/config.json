@@ -1,0 +1,56 @@
+{
+  "name": "OverlayWebsite Default Configuration",
+  "version": "1.0.0",
+  "settings": {
+    "writingStyle": "default",
+    "theme": "default",
+    "fontStyle": "default",
+    "fontSize": 100
+  },
+  "fonts": {
+    "primary": "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+    "secondary": "Georgia, Times New Roman, serif",
+    "monospace": "Courier New, Consolas, monospace",
+    "playful": "Comic Sans MS, cursive"
+  },
+  "themes": {
+    "dark": {
+      "background": "#2c3e50",
+      "text": "#ecf0f1",
+      "accent": "#3498db"
+    },
+    "light": {
+      "background": "#ffffff",
+      "text": "#2c3e50",
+      "accent": "#007bff"
+    },
+    "colorful": {
+      "background": "linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4)",
+      "text": "#ffffff",
+      "accent": "#ffffff"
+    },
+    "minimal": {
+      "background": "#f8f9fa",
+      "text": "#495057",
+      "accent": "#6c757d"
+    }
+  },
+  "writingStyles": {
+    "funny": {
+      "description": "Add humor and personality to content",
+      "tone": "casual, humorous, engaging"
+    },
+    "professional": {
+      "description": "Use formal, business-appropriate language",
+      "tone": "formal, technical, precise"
+    },
+    "simple": {
+      "description": "Remove jargon and simplify complex terms",
+      "tone": "clear, accessible, straightforward"
+    },
+    "detailed": {
+      "description": "Add comprehensive explanations and step-by-step instructions",
+      "tone": "thorough, instructional, comprehensive"
+    }
+  }
+}
