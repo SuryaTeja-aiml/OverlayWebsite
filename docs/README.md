@@ -34,8 +34,34 @@
 
 1. **Explore the Interface**: The main page shows a control panel and preview area
 2. **Try Different Settings**: Change writing styles, themes, and fonts to see real-time previews
-3. **Apply Changes**: Click "Apply Overlay" to activate your settings
-4. **Save Configuration**: Use "Save Config" to download your custom setup
+3. **Use Accessibility Features**: Test high contrast themes and dyslexia-friendly fonts
+4. **Apply Changes**: Click "Apply Overlay" or use Alt+A to activate your settings  
+5. **Save Configuration**: Use "Save Config" or Alt+S to download your custom setup
+6. **Try Keyboard Shortcuts**: Use Alt+R to reset, Ctrl+Z to undo changes
+
+### New Features Guide
+
+#### Custom Color Picker
+1. Select "Custom" from the Theme dropdown
+2. Use the color pickers to choose background, text, and accent colors
+3. Changes apply instantly with live preview enabled
+
+#### Accessibility Features
+- **High Contrast Theme**: Select "High Contrast (A11y)" for better visibility
+- **Dyslexia-Friendly Font**: Choose "Dyslexia Friendly" from font styles
+- **Extra High Contrast**: Enable in Settings for additional contrast boost
+- **Reduced Motion**: Enable to minimize animations for motion sensitivity
+
+#### Keyboard Shortcuts
+- **Alt + A**: Apply current overlay settings
+- **Alt + R**: Reset all settings to defaults
+- **Alt + S**: Save configuration to file
+- **Ctrl + Z**: Undo last change (up to 10 changes tracked)
+
+#### Live Preview System
+- Toggle "Live Preview" in Settings to enable/disable real-time changes
+- When enabled, changes apply automatically as you modify settings
+- When disabled, use the Apply button to see changes
 
 ## Configuration
 
@@ -67,6 +93,10 @@
 - `light`: Light background with dark text
 - `colorful`: Vibrant gradient background
 - `minimal`: Clean, minimal appearance
+- `high-contrast`: High contrast mode for accessibility
+- `sepia`: Warm, sepia-toned theme
+- `night`: Dark theme optimized for low light
+- `custom`: Use custom color picker to create personalized themes
 
 #### Font Styles
 - `default`: Keep original fonts
@@ -74,10 +104,17 @@
 - `sans-serif`: Modern sans-serif fonts (Arial)
 - `monospace`: Fixed-width fonts (Courier)
 - `playful`: Fun, casual fonts (Comic Sans)
+- `dyslexia-friendly`: Specialized font for dyslexia with improved spacing
+- `readable`: High readability font (Verdana) with enhanced clarity
 
 #### Font Size
-- Range: 80% to 150% of original size
+- Range: 75% to 200% of original size (extended for accessibility)
 - Default: 100%
+
+#### Accessibility Options
+- `livePreview`: Enable/disable real-time preview
+- `highContrast`: Extra high contrast mode for visual impairments
+- `reducedMotion`: Minimize animations for motion sensitivity
 
 ## API Reference
 
@@ -118,6 +155,42 @@ overlay.saveConfig();
 Reset all settings to defaults.
 ```javascript
 overlay.resetOverlays();
+```
+
+##### `undoLastAction()`
+Undo the last change made to settings.
+```javascript
+overlay.undoLastAction();
+```
+
+##### `applyCustomTheme()`
+Apply custom color theme from color picker.
+```javascript
+overlay.applyCustomTheme();
+```
+
+##### `applyHighContrast(enabled)`
+Enable/disable high contrast mode.
+```javascript
+overlay.applyHighContrast(true);
+```
+
+##### `applyReducedMotion(enabled)`
+Enable/disable reduced motion mode.
+```javascript
+overlay.applyReducedMotion(true);
+```
+
+##### `saveToHistory()`
+Save current state to undo history.
+```javascript
+overlay.saveToHistory();
+```
+
+##### `toggleCustomColorPicker(show)`
+Show/hide custom color picker interface.
+```javascript
+overlay.toggleCustomColorPicker(true);
 ```
 
 ## Examples

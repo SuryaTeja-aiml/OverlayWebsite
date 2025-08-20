@@ -1,0 +1,26 @@
+{
+  "name": "Custom Sepia Theme Configuration",
+  "description": "Warm sepia tones with high readability font for comfortable reading",
+  "version": "1.1.0",
+  "settings": {
+    "writingStyle": "detailed",
+    "theme": "custom",
+    "fontStyle": "readable",
+    "fontSize": 110,
+    "livePreview": true,
+    "highContrast": false,
+    "reducedMotion": false,
+    "customColors": {
+      "background": "#f4f3e7",
+      "text": "#5c4b37",
+      "accent": "#8b4513"
+    }
+  },
+  "features": [
+    "Custom sepia color scheme",
+    "High readability Verdana font",
+    "Detailed writing style for comprehensive information",
+    "Live preview enabled for real-time feedback",
+    "Warm, eye-friendly color palette"
+  ]
+}

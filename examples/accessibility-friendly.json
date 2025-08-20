@@ -1,0 +1,26 @@
+{
+  "name": "Accessibility-Friendly Configuration",
+  "description": "High contrast, dyslexia-friendly setup for enhanced accessibility",
+  "version": "1.1.0",
+  "settings": {
+    "writingStyle": "simple",
+    "theme": "high-contrast",
+    "fontStyle": "dyslexia-friendly",
+    "fontSize": 125,
+    "livePreview": true,
+    "highContrast": true,
+    "reducedMotion": true,
+    "customColors": {
+      "background": "#000000",
+      "text": "#ffffff",
+      "accent": "#ffff00"
+    }
+  },
+  "features": [
+    "High contrast black and white theme",
+    "Dyslexia-friendly font with improved spacing",
+    "Larger text size for better readability",
+    "Reduced motion for motion sensitivity",
+    "Simplified writing style for clarity"
+  ]
+}

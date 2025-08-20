@@ -4,11 +4,16 @@ A powerful web overlay tool that allows you to modify website styling on-the-fly
 
 ## 🚀 Features
 
-- **Dynamic Font Replacement**: Change fonts across any website
-- **Theme Overlays**: Apply custom themes and color schemes
+- **Dynamic Font Replacement**: Change fonts across any website with accessibility options
+- **Theme Overlays**: Apply custom themes and color schemes including high contrast modes
 - **Writing Style Transformation**: Convert content to different styles (funny, professional, simplified)
-- **Real-time Preview**: See changes instantly as you apply them
-- **Easy Configuration**: Simple JSON-based configuration system
+- **Real-time Live Preview**: See changes instantly as you apply them
+- **Easy Configuration**: Simple JSON-based configuration system with import/export
+- **Accessibility Features**: High contrast themes, dyslexia-friendly fonts, larger text options
+- **Custom Color Picker**: Create personalized themes with custom colors
+- **Keyboard Shortcuts**: Power user efficiency with hotkeys
+- **Undo/Redo Functionality**: Track changes and revert when needed
+- **Enhanced Notifications**: Better user feedback with smooth animations
 
 ## 📋 Prerequisites
 
@@ -39,9 +44,24 @@ Navigate to `http://localhost:3000` to see the overlay tool in action.
 ## 🎯 Basic Usage
 
 1. **Load the overlay**: Include the overlay script in your webpage or use the browser extension
-2. **Configure styles**: Modify `config.json` to set your preferred fonts, themes, and styles
-3. **Apply changes**: Use the control panel to toggle different overlay options
-4. **Save preferences**: Export your configuration for future use
+2. **Configure styles**: Modify settings using the intuitive control panel
+3. **Live Preview**: Enable live preview to see changes in real-time
+4. **Apply changes**: Use the control panel or keyboard shortcuts (Alt+A) to apply settings
+5. **Save preferences**: Export your configuration for future use (Alt+S)
+6. **Accessibility**: Use high contrast themes and dyslexia-friendly fonts for better readability
+
+### 🎮 Keyboard Shortcuts
+- **Alt + A**: Apply overlay
+- **Alt + R**: Reset to defaults  
+- **Alt + S**: Save configuration
+- **Ctrl + Z**: Undo last change
+
+### ♿ Accessibility Features
+- **High Contrast Theme**: Better visibility for users with visual impairments
+- **Dyslexia-Friendly Font**: Specialized font with improved letter spacing
+- **High Readability Font**: Clear, accessible font with better readability
+- **Extended Font Size Range**: 75% to 200% for better accessibility
+- **Reduced Motion**: Option to minimize animations for users with motion sensitivity
 
 ## 📁 Project Structure
 
@@ -60,21 +80,54 @@ OverlayWebsite/
 
 ## ⚙️ Configuration
 
+### Basic Configuration
 Create or modify `src/config.json` to customize the overlay:
 
 ```json
 {
-  "fonts": {
-    "primary": "Arial, sans-serif",
-    "secondary": "Georgia, serif"
-  },
-  "theme": {
-    "primary": "#007bff",
-    "secondary": "#6c757d"
-  },
-  "writingStyle": "professional"
+  "settings": {
+    "writingStyle": "professional",
+    "theme": "dark",
+    "fontStyle": "dyslexia-friendly",
+    "fontSize": 120,
+    "livePreview": true,
+    "highContrast": false,
+    "reducedMotion": false,
+    "customColors": {
+      "background": "#ffffff",
+      "text": "#000000", 
+      "accent": "#007bff"
+    }
+  }
 }
 ```
+
+### Available Options
+
+#### Themes
+- `default`: No theme changes
+- `dark`: Dark background with light text
+- `light`: Light background with dark text  
+- `colorful`: Vibrant gradient background
+- `minimal`: Clean, minimal appearance
+- `high-contrast`: High contrast for accessibility
+- `sepia`: Warm, sepia-toned theme
+- `night`: Dark theme optimized for low light
+- `custom`: Use custom color picker
+
+#### Font Styles  
+- `default`: Keep original fonts
+- `serif`: Traditional serif fonts (Georgia)
+- `sans-serif`: Modern sans-serif fonts (Arial)
+- `monospace`: Fixed-width fonts (Courier)
+- `playful`: Fun, casual fonts (Comic Sans)
+- `dyslexia-friendly`: Specialized font for dyslexia
+- `readable`: High readability font (Verdana)
+
+#### Accessibility Settings
+- `livePreview`: Enable/disable real-time preview
+- `highContrast`: Extra high contrast mode
+- `reducedMotion`: Minimize animations
 
 ## 🤝 Contributing
 
@@ -94,8 +147,16 @@ Found a bug or need help? Please [open an issue](https://github.com/SuryaTeja-ai
 
 ## 🌟 Roadmap
 
-- [ ] Browser extension support
-- [ ] Advanced theme editor
-- [ ] AI-powered content transformation
-- [ ] Multi-language support
-- [ ] Performance optimization
+- [x] **Enhanced Accessibility Features** - High contrast themes, dyslexia-friendly fonts
+- [x] **Custom Color Picker** - Create personalized themes
+- [x] **Live Preview System** - Real-time changes without manual application
+- [x] **Keyboard Shortcuts** - Power user efficiency features
+- [x] **Undo/Redo Functionality** - Change history tracking
+- [ ] **Browser Extension Support** - Chrome/Firefox extensions
+- [ ] **Advanced Theme Editor** - Visual theme creation tool
+- [ ] **AI-powered Content Transformation** - Smart content rewriting
+- [ ] **Multi-language Support** - Internationalization
+- [ ] **Performance Optimization** - Faster rendering and processing
+- [ ] **Website-specific Presets** - Save configurations per domain
+- [ ] **CSS Injection System** - Advanced custom styling
+- [ ] **Mobile App** - Native mobile overlay application
