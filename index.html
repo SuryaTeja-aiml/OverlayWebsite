@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OverlayWebsite - Style Modifier Tool</title>
+    <link rel="stylesheet" href="src/overlay.css">
+</head>
+<body>
+    <div class="overlay-container">
+        <header class="overlay-header">
+            <h1>🎨 OverlayWebsite</h1>
+            <p>Transform any website's appearance with powerful overlay tools</p>
+        </header>
+
+        <main class="overlay-main">
+            <section class="control-panel">
+                <h2>Control Panel</h2>
+                
+                <div class="control-group">
+                    <h3>📝 Writing Style</h3>
+                    <select id="writingStyle" class="control-select">
+                        <option value="default">Default</option>
+                        <option value="funny">Funny</option>
+                        <option value="professional">Professional</option>
+                        <option value="simple">Simple (No Jargon)</option>
+                        <option value="detailed">Detailed Instructions</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <h3>🎭 Theme</h3>
+                    <select id="theme" class="control-select">
+                        <option value="default">Default</option>
+                        <option value="dark">Dark Mode</option>
+                        <option value="light">Light Mode</option>
+                        <option value="colorful">Colorful</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <h3>🔤 Font Style</h3>
+                    <select id="fontStyle" class="control-select">
+                        <option value="default">Default</option>
+                        <option value="serif">Serif</option>
+                        <option value="sans-serif">Sans-serif</option>
+                        <option value="monospace">Monospace</option>
+                        <option value="playful">Playful</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <h3>📏 Font Size</h3>
+                    <input type="range" id="fontSize" min="80" max="150" value="100" class="control-range">
+                    <span id="fontSizeValue">100%</span>
+                </div>
+
+                <div class="control-actions">
+                    <button id="applyOverlay" class="btn btn-primary">Apply Overlay</button>
+                    <button id="resetOverlay" class="btn btn-secondary">Reset</button>
+                    <button id="saveConfig" class="btn btn-success">Save Config</button>
+                </div>
+            </section>
+
+            <section class="preview-section">
+                <h2>Preview</h2>
+                <div class="preview-area" id="previewArea">
+                    <h3>Sample Content</h3>
+                    <p>This is a sample paragraph to demonstrate how the overlay affects text styling. You can see changes in font, theme, and writing style here.</p>
+                    <ul>
+                        <li>Feature 1: Dynamic font changes</li>
+                        <li>Feature 2: Theme modifications</li>
+                        <li>Feature 3: Writing style transformation</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer class="overlay-footer">
+            <p>&copy; 2025 OverlayWebsite - Transform your web experience</p>
+        </footer>
+    </div>
+
+    <script src="src/overlay.js"></script>
+</body>
+</html>

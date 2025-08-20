@@ -1,0 +1,35 @@
+{
+  "name": "overlay-website",
+  "version": "1.0.0",
+  "description": "A powerful web overlay tool for modifying website styling on-the-fly",
+  "main": "src/overlay.js",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx http-server . -p 3000 -o",
+    "build": "echo 'Build process will be added here'",
+    "test": "echo 'Tests will be added here'"
+  },
+  "keywords": [
+    "overlay",
+    "website",
+    "styling",
+    "themes",
+    "fonts",
+    "css",
+    "javascript"
+  ],
+  "author": "Surya Teja",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SuryaTeja-aiml/OverlayWebsite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SuryaTeja-aiml/OverlayWebsite/issues"
+  },
+  "homepage": "https://github.com/SuryaTeja-aiml/OverlayWebsite#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {}
+}

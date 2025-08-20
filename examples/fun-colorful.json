@@ -1,0 +1,10 @@
+{
+  "name": "Fun and Colorful Setup",
+  "description": "Bright, colorful theme with playful fonts for engaging content",
+  "settings": {
+    "writingStyle": "funny",
+    "theme": "colorful",
+    "fontStyle": "playful",
+    "fontSize": 120
+  }
+}

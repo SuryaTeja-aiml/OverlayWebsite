@@ -1,0 +1,10 @@
+{
+  "name": "Clean and Simple Setup",
+  "description": "Minimal theme with clear fonts for easy reading",
+  "settings": {
+    "writingStyle": "simple",
+    "theme": "minimal",
+    "fontStyle": "sans-serif",
+    "fontSize": 105
+  }
+}

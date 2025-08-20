@@ -1,0 +1,10 @@
+{
+  "name": "Dark Theme Professional Setup",
+  "description": "Professional dark theme with serif fonts for formal websites",
+  "settings": {
+    "writingStyle": "professional",
+    "theme": "dark",
+    "fontStyle": "serif",
+    "fontSize": 110
+  }
+}
